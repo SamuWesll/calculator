@@ -10,6 +10,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String result = 'Resultado da soma';
+  String vlResult = '0';
+  double number1 = 0.0;
+  double number2 = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,6 +30,9 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: [
               TextField(
+                onChanged: (value) {
+                  this.number1 = double.parse(value);
+                },
                 keyboardType: TextInputType.number,
                 style: TextStyle(color: Colors.deepPurpleAccent),
                 decoration: InputDecoration(
@@ -38,6 +46,9 @@ class _MyAppState extends State<MyApp> {
               ),
               Padding(padding: EdgeInsets.all(4.0)),
               TextField(
+                onChanged: (value) {
+                  this.number2 = double.parse(value);
+                },
                 keyboardType: TextInputType.number,
                 style: TextStyle(color: Colors.deepPurpleAccent),
                 decoration: InputDecoration(
@@ -53,18 +64,39 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: _calcular,
                     child: Text('Calcular'),
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.deepPurpleAccent),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16))))),
+              ),
+              Padding(padding: EdgeInsets.all(4.0)),
+              Text(
+                this.result,
+                style: TextStyle(color: Colors.deepPurpleAccent),
+              ),
+              Padding(padding: EdgeInsets.all(4.0)),
+              Text(
+                vlResult,
+                style: TextStyle(
+                  color: Colors.deepPurpleAccent,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _calcular() {
+    double calc = this.number1 + this.number2;
+    setState(() {
+      this.vlResult = calc.toStringAsFixed(0);
+    });
   }
 }
